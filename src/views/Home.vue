@@ -53,13 +53,19 @@
 // @ is an alias to /src
 //import HelloWorld from '@/components/HelloWorld.vue'
 
+//import { mapState } from "vuex";
+
 export default {
   name: "HomeView",
   data: () => {
     return {
       mode: "loginAccount",
+      username: "",
+      email: "",
+      password: "",
     };
   },
+
   methods: {
     linkToCreateAccount: function () {
       this.mode = "createAccount";
@@ -67,7 +73,21 @@ export default {
     linkToLoginAccount: function () {
       this.mode = "loginAccount";
     },
-    btnLogin: function () {},
+    btnCreate: function () {
+      const newUser = {
+        username: this.username,
+        email: this.email,
+        password: this.password,
+      };
+      this.$store.dispatch("btnCreate", newUser);
+    },
+    btnLogin: function () {
+      const logUser = {
+        username: this.username,
+        password: this.password,
+      };
+      this.$store.dispatch("btnLogin", logUser);
+    },
   },
   /*
   components: {
