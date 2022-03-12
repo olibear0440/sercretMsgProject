@@ -44,6 +44,7 @@
           Valider
         </button>
         <button @click="btnCreate()" v-else>Enregistrer</button>
+        <p id="errorRegxMdp"></p>
       </div>
     </div>
   </div>
@@ -77,8 +78,27 @@ export default {
       this.mode = "loginAccount";
     },
 
-    //bouton de validation lors pour la création du compte
     btnCreate: function () {
+      //creation des criteres de solidité du mot de passe
+      const regexs = [
+        /^.{8,}$/, //min 8 caractères
+        /[A-Z]/, //min 1 lettres majuscules
+        /[a-z]/, //min 1 lettres minuscules
+        /\d/, //min 1 chiffre
+        /[@%#^&*]/, //caracteres speciaux acceptés
+      ];
+
+      //joindre l'élément correspondant à l'échec de validité à passer
+      const errorMdp = document.getElementById("errorRegxMdp");
+      errorMdp.innerHTML = "";
+
+      //test de la validité du password et implémenter le message
+      if (regexs.some((regex) => !regex.test(this.password))) {
+        errorMdp.innerHTML =
+          "Le mot de passe doit contenir 8 caractères minimum, une majuscule, une minuscule, un chiffre et un symbole";
+        return;
+      }
+
       const newUser = {
         username: this.username,
         email: this.email,
@@ -95,8 +115,29 @@ export default {
         });
     },
 
-    //bouton de connexion pour un compte existant
+    //btn connexion compte existant
+
     btnLogin: function () {
+      //creation des criteres de solidité du mot de passe
+      const regexs = [
+        /^.{8,}$/, //min 8 caractères
+        /[A-Z]/, //min 1 lettres majuscules
+        /[a-z]/, //min 1 lettres minuscules
+        /\d/, //min 1 chiffre
+        /[@%#^&*]/, //caracteres speciaux acceptés
+      ];
+
+      //joindre l'élément correspondant à l'échec de validité à passer
+      const errorMdp = document.getElementById("errorRegxMdp");
+      errorMdp.innerHTML = "";
+
+      //test de la validité du password et implémenter le message
+      if (regexs.some((regex) => !regex.test(this.password))) {
+        errorMdp.innerHTML =
+          "Le mot de passe doit contenir 8 caractères minimum, une majuscule, une minuscule, un chiffre et un symbole";
+        return;
+      }
+
       const logUser = {
         username: this.username,
         password: this.password,

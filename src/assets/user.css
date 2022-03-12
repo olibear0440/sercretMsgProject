@@ -37,3 +37,7 @@ button {
   background-color: black;
   color: white;
 }
+#errorRegxMdp{
+  font-size: 0.8em;
+  color: red;
+}
