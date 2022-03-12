@@ -1,12 +1,9 @@
 /*
-* import express
-* import variable d'environnement
-* import morgan (log des requetes et des reponses)
-* import routes
+  * import et creation app Express
 
+  * import routeur
+  * ajout du middleware cors
 */
-
-
 const express = require("express");
 require("dotenv").config();
 const morgan = require("morgan");
@@ -14,6 +11,7 @@ const morgan = require("morgan");
 const userRoutes = require("./routes/user");
 
 const app = express();
+
 
 app.use((req, res, next) => {
     res.setHeader("Access-Control-Allow-Origin", "*");

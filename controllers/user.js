@@ -3,6 +3,12 @@ const bcrypt = require("bcrypt");
 require("dotenv").config();
 const jwt = require("jsonwebtoken");
 
+
+/*
+  * Enregistrement d'un utilisateur
+
+  * module bcrypt pour le hashage du mot de passe
+*/
 exports.signup = (req, res, next) => {
   bcrypt
     .hash(req.body.password, 10)
@@ -24,6 +30,12 @@ exports.signup = (req, res, next) => {
     .catch((err) => res.status(501).json({ error }));
 };
 
+/*
+  * login d'un utilisateur
+
+  * module bcrypt pour comparer le mot de passe
+  * module jsonwebtoken pour creer le token
+*/
 exports.login = (req, res, next) => {
   db.query(
     "SELECT * FROM users WHERE username=?",
