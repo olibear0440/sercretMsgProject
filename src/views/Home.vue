@@ -67,26 +67,49 @@ export default {
   },
 
   methods: {
+    //lien vers la creation de compte
     linkToCreateAccount: function () {
       this.mode = "createAccount";
     },
+
+    //lien vers le login
     linkToLoginAccount: function () {
       this.mode = "loginAccount";
     },
+
+    //bouton de validation lors pour la création du compte
     btnCreate: function () {
       const newUser = {
         username: this.username,
         email: this.email,
         password: this.password,
       };
-      this.$store.dispatch("btnCreate", newUser);
+      let self = this;
+      this.$store
+        .dispatch("btnCreate", newUser)
+        .then(function () {
+          self.btnLogin();
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
+
+    //bouton de connexion pour un compte existant
     btnLogin: function () {
       const logUser = {
         username: this.username,
         password: this.password,
       };
-      this.$store.dispatch("btnLogin", logUser);
+      let self = this;
+      this.$store
+        .dispatch("btnLogin", logUser)
+        .then(function () {
+          self.$router.push("/about");
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
   },
   /*

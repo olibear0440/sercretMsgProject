@@ -17,22 +17,24 @@ const mutations = {
   }
 };
 const actions = {
+  
+  // appel api de la creation d'un compte sur le bouton de validation
   btnCreate: ({ commit }, newUser) => {
     instance
       .post("/user/signup", newUser)
       .then((response) => {
-        console.log(response.data);
         commit("CREATE_USER", response.data);
       })
       .catch((error) => {
         console.log(error);
       });
   },
+
+  // appel api du login sur le bouton de connexion
   btnLogin: ({ commit }, logUser) => {
     instance
       .post("/user/login", logUser)
       .then((response) => {
-        console.log(response.data);
         commit("LOG_USER", response.data);
       })
       .catch((error) => {
