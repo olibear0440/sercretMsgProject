@@ -2,6 +2,7 @@ const express = require("express");
 //creation du router
 const router = express.Router();
 const userCtrl = require("../controllers/user");
+//const auth = require("../middleware/auth")
 
 /*
     * creation utilisateur
