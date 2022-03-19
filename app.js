@@ -6,6 +6,7 @@
 */
 const express = require("express");
 require("dotenv").config();
+const path = require("path");
 const morgan = require("morgan");
 
 const userRoutes = require("./routes/user");
@@ -29,6 +30,8 @@ app.use((req, res, next) => {
 app.use(express.json());
 app.use(morgan("dev"));
 
+//middleware dossier images
+app.use("/images", express.static(path.join(__dirname, "images")));
 
 app.use("/user", userRoutes);
 

@@ -25,10 +25,16 @@ exports.signup = (req, res, next) => {
         const email = req.body.email;
         const password = hash;
         const userRole = 0;
+        const userPic = "";
+        if (req.file) {
+          userPic = `${req.protocol}://${req.get("host")}/images/${
+            req.file.filename
+          }`;
+        }
 
-        const userInfos = [username, email, password, userRole];
+        const userInfos = [userPic, username, email, password, userRole];
         const query =
-          "INSERT INTO users (username, email, password, userRole) VALUES (?,?,?,?)";
+          "INSERT INTO users (userPic, username, email, password, userRole) VALUES (?,?,?,?,?)";
         db.query(query, userInfos, (err, rows, fields) => {
           if (err) {
             return res.status(400).json(err);
@@ -63,6 +69,7 @@ exports.login = (req, res, next) => {
         let username = results[0].username;
         let email = results[0].email;
         let userRole = results[0].userRole;
+        let userPic = results[0].userPic;
         let token = jwt.sign({ userId: results[0].id }, process.env.JWT_KEY, {
           expiresIn: "24h",
         });
@@ -74,6 +81,7 @@ exports.login = (req, res, next) => {
           username: username,
           email: email,
           userRole: userRole,
+          userPic: userPic,
           token: "Bearer " + token,
         });
       })
@@ -100,7 +108,7 @@ exports.getAllUsers = (req, res, next) => {
  */
 exports.getCurrentUser = (req, res, next) => {
   const authToken = req.headers.authorization.split(" ")[1];
-  console.log(authToken)
+  console.log(authToken);
   const query = "SELECT * FROM users WHERE token = ?";
   db.query(query, [authToken], (err, rows, fields) => {
     if (!err) {
