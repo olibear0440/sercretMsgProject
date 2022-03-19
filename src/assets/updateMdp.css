@@ -1,0 +1,15 @@
+.title{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    color: white;
+}
+span{
+    text-decoration: none;
+    margin-right: 20px;
+    cursor: pointer;
+}
+h4{
+    color: #78b0e8;
+}

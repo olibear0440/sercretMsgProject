@@ -1,5 +1,5 @@
 <template>
-  <div class="home">
+  <div class="registerPage">
     <div class="register">
       <!--Titre d'enregistrement et login-->
       <div class="title">
@@ -44,6 +44,9 @@
           Valider
         </button>
         <button @click="btnCreate()" v-else>Enregistrer</button>
+        <p v-if="mode == 'loginAccount'" class="createNote">
+          <span @click="linkToUpdateMdp()">Mot passe oublié</span>
+        </p>
         <p id="errorRegxMdp"></p>
       </div>
     </div>
@@ -57,7 +60,7 @@
 //import { mapState } from "vuex";
 
 export default {
-  name: "HomeView",
+  name: "RegisterPage",
   data: () => {
     return {
       mode: "loginAccount",
@@ -77,7 +80,12 @@ export default {
     linkToLoginAccount: function () {
       this.mode = "loginAccount";
     },
+    //lien vers le mot de passe oublié
+    linkToUpdateMdp: function () {
+      this.$router.push("/mdp-update");
+    },
 
+    //btn creation de compte
     btnCreate: function () {
       //creation des criteres de solidité du mot de passe
       const regexs = [
@@ -98,7 +106,6 @@ export default {
           "Le mot de passe doit contenir 8 caractères minimum, une majuscule, une minuscule, un chiffre et un symbole";
         return;
       }
-
       const newUser = {
         username: this.username,
         email: this.email,
@@ -116,7 +123,6 @@ export default {
     },
 
     //btn connexion compte existant
-
     btnLogin: function () {
       //creation des criteres de solidité du mot de passe
       const regexs = [
@@ -137,7 +143,6 @@ export default {
           "Le mot de passe doit contenir 8 caractères minimum, une majuscule, une minuscule, un chiffre et un symbole";
         return;
       }
-
       const logUser = {
         username: this.username,
         password: this.password,
@@ -146,7 +151,7 @@ export default {
       this.$store
         .dispatch("btnLogin", logUser)
         .then(function () {
-          self.$router.push("/about");
+          self.$router.push("/home-page");
         })
         .catch((error) => {
           console.log(error);
@@ -161,5 +166,5 @@ export default {
 };
 </script>
 <style>
-@import "../assets/user.css";
+@import "../assets/registerPage.css";
 </style>
